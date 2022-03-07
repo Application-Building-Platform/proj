@@ -9,7 +9,7 @@ switch ($_REQUEST['i']) {
         include("category.php");
         break;			
     case 'viewquestion':
-        echo "question";
+        include("question.php");
         break;
 	default:
 		echo "default";

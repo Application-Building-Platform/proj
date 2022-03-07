@@ -1,71 +1,103 @@
 * {
-  box-sizing: border-box;
-  margin: 0;
-  border: 0;
-  padding: 0;
-  text-decoration: none;
-  list-style-type: none;
+	box-sizing: border-box;
+	margin: 0;
+	border: 0;
+	padding: 0;
+	text-decoration: none;
+	list-style-type: none;
 }
 body {
-  background: #f2f6f9;
-  color: black;
-  font-family: Arial, Helvetica, sans-serif;
+    font: normal 0.8em 'trebuchet ms', arial, sans-serif;
+    background: #F0EFE2;
+    color: #777;
 }
-.page {
+.header {
+    background: #404040;
+    border-bottom: 1px solid #FFF;
+    height: 240px;
 	display: flex;
-	height:100vh;
+	align-items: flex-end;
+	justify-content: center;
+	flex-direction: column;
 }
-.left {
-	flex: 1;
-	background: transparent url("../images/menu_bg.jpg") repeat 0 0;
-}
-.right {
-	flex: 4;
+.page_canter {
+	width: 873px;
+    overflow: hidden;
+    margin: auto;
+    padding: 25px;
+    background: #FFF;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 .menu {
-	margin-top: 40px;
+    width: 875px;
+    height: 71px;
+    padding: 0px 0 0 0px;
+    border: 1px solid #6A6A6A;
+    border-bottom: 0;
+    background: #555 url("../images/menu.png") repeat-x;
+	flex: 1;
+    margin: auto;
+	display: flex;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
-.link {
-	background: #d1d1d1;
-    margin: 1px;
-    padding: 8px 15px;
-	display: block;
-	color: black;
+.menu a {
+    flex-basis: auto;
+    text-align: center;
+    padding: 0 10px;
+    display: flex;
+    letter-spacing: 0.1em;
+    font: normal 100% 'trebuchet ms', arial;
+    color: #CDC090;
+    text-transform: uppercase;
+    border-right: 1px solid #6A6A6A;
+    background: transparent;
+    align-items: center;
+    justify-content: center;
 }
-.link:nth-child(1), .link:nth-child(5) {
-  margin-bottom: 40px;
+.menu a:hover{
+	color: #fff;
 }
-.controller {
-	padding: 30px;
+.logo {
+	width: 875px;
+	flex: 2.3;
+    margin: auto;
+	display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.logo h1 {
+	font: normal 300% 'century gothic', arial, sans-serif;
+	color: #777;
+    letter-spacing: 0.1em;
+}
+.logo a {
+	color: #777;
+    letter-spacing: 0.1em;
 }
 .title {
-	margin: 0 0 20px 5px;
+	margin: 0 0 20px 0;
 }
 .form {
 	border: 1px solid #bfc1c1;
     padding: 20px;
-    border-radius: 5px;
 	background: #ededed;
 }
 .form input, .form textarea {
 	width: 100%;
 	padding: 1em;
-    margin-bottom: 1em;
+    /* margin: 0.2em 0 1em 0; */
 	border: 1px solid #bfc1c1;
-    border-radius: 5px;
 }
 .form input[type="submit"]{
-	background: #16d4ff;
+	background: #404040;
 	width : auto;
+	color: #fff;
+	margin: 0;
 }
 .green {
 	background: #cef1ce;
 }
 .table {
-	display: flex;
-    text-align: center;
-}
-.table2 {
 	display: flex;
     text-align: center;
 }
@@ -79,10 +111,95 @@ body {
 .table .r{
 	flex:5;
 }
-.table .header {
-	background: #151515;
+.table .tblHeader {
+	background: #404040;
     color: white;
 }
 .table .rows {
 	background: white;
 }
+.questinInfo {
+	display: flex;
+	flex-direction: column;
+}
+.qst {
+	flex: 1;
+	display: flex;
+}
+.question {
+	flex-direction: column;
+    background: white;
+    padding: 15px;
+    border: 1px solid #bfc1c1;
+    margin: 10px 0;
+}
+.questinInfo h2 {
+    font: normal 175% 'century gothic', arial, sans-serif;
+    color: #A4AA04;
+}
+.questinInfo h4 {
+    font: normal 120% arial, sans-serif;
+    color: #A4AA04;
+}
+.questinInfo input {
+    padding: 5px;
+}
+.qMargin  {
+    margin: 5px 0px 15px 0;
+}
+.choiceSection {
+	flex-direction: column;
+	margin-left: 17%;
+}
+.inputFlex {
+	flex: 5;
+}
+.lbl {
+	align-items: center;
+}
+.qType {
+	padding: 5px;
+    border: 1px solid #bfc1c1;
+}
+.choiceButtonGroup {
+	flex-direction: column;
+}
+.newQButton {
+	column-gap: 15px;
+}
+.rightSubmit {
+	justify-content: flex-end;
+	column-gap: 10px;
+}
+.rightSubmit input, .newQButton input{
+	width: auto;
+}
+.rightSubmit input[type="button"], .deleteQ{
+	width: auto;
+	background: red;
+	color: white;
+}
+.childChoice {
+	column-gap: 20px;
+}
+.choiceButtonAdd input{
+	flex-basis: 95px;
+}
+
+
+
+.footer {
+	display: flex;
+    margin: auto;
+    width: 875px;
+    font: normal 100% "lucida sans unicode";
+    height: 50px;
+    background: #555 url("../images/menu.png") repeat-x;
+    color: #CDC090;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+    align-items: center;
+    justify-content: center;
+}
+

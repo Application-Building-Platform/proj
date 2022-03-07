@@ -10,7 +10,7 @@ $clientPhone        = filter_input(INPUT_POST, "phone", FILTER_SANITIZE_SPECIAL_
 $clientAddress      = filter_input(INPUT_POST, "address", FILTER_SANITIZE_SPECIAL_CHARS);
 $clientCategory     = filter_input(INPUT_POST, "category", FILTER_SANITIZE_SPECIAL_CHARS);
 $clientDescription  = filter_input(INPUT_POST, "description", FILTER_SANITIZE_SPECIAL_CHARS);
-$categoryName         = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
+$categoryName       = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
 // $message = "";
 switch ($_REQUEST['y']) {
     case 'add_client':
@@ -58,31 +58,28 @@ switch ($_REQUEST['y']) {
 			echo "There is an issue with your parameters ..";
 		}
         break;
+	case 'del_client':
+	case 'del_category':
+		$client_id = $category_id = $_REQUEST['id'];
+		$table = ($_REQUEST['y'] == "del_client" ? "clients" : "categories");
+		$colum = ($_REQUEST['y'] == "del_client" ? $client_id : $category_id);
+		$row   = ($_REQUEST['y'] == "del_client" ? "client_id" : "category_id");
+        if($client_id !== null && $client_id !== false){
+			$SQL = $dbh->prepare("DELETE FROM $table WHERE $row = ?");
+			if ($SQL->execute([$colum])) {
+				echo "<div class='controller'>";
+				echo "<div class='form green'>";
+				echo "The $table has been deleted";
+				echo "</div>";
+				echo "</div>";
+			}else {
+				echo"error";
+			}
+		}
+        break;
 	default:
 		echo "default";
 } 
 
-function get_all_data($dbh){
-	$results = array();
-	
-	try 
-	{
-		$stmt = $dbh->prepare("SELECT * FROM clients");
-		$stmt->execute();
-		while ($nextRow = $stmt->fetch()){
-			$results[] = $nextRow;
-		} 	
-		
-	}
-	catch (PDOException $e)
-	{
-		echo "Select failed: " . $e->getMessage();
-		exit();
-	}
-	
-	return $results;
-}
-
-$TPL['results'] = get_all_data($dbh);
 
 include("../footer.php"); 

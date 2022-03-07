@@ -9,7 +9,7 @@ switch ($_REQUEST['i']) {
         include("client.php");
         break;
     case 'addquestion':
-        echo "question";
+        include("question.php");
         break;
     case 'addcategory':
         include("category.php");

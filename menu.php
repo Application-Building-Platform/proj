@@ -17,17 +17,21 @@ $url = 'http://' . $_SERVER['SERVER_NAME'] .'/proj/';
 </head>
 <body>
 	<div class="page">
-		<div class="left">
-			<div class="menu">
-				<a class="link" href="<?php echo $url; ?>" alt="HOME">HOME</a>
-				<a class="link" href="<?php echo $url; ?>server/add.php?i=addapplication" alt="Add Application">Add Application</a>
-				<a class="link" href="<?php echo $url; ?>server/add.php?i=addclient" alt="Add client">Add client</a>
-				<a class="link" href="<?php echo $url; ?>server/add.php?i=addquestion" alt="Add question">Add question</a>
-				<a class="link" href="<?php echo $url; ?>server/add.php?i=addcategory" alt="Add category">Add category</a>
-				<a class="link" href="<?php echo $url; ?>server/view.php?i=viewclient" alt="View clients">View clients</a>
-				<a class="link" href="<?php echo $url; ?>server/view.php?i=viewcategory" alt="View categoios">View categoios</a>
-				<a class="link" href="<?php echo $url; ?>server/view.php?i=viewquestion" alt="View all questions">View all questions</a>
-			</div>
+		<div class="header">
+				<div class="logo">
+					<h1><a href="index.php"><span class="logo_colour">Survey Builder</span></a></h1>
+				</div>
+				<div class="menu">
+					<a class="link" href="<?php echo $url; ?>" alt="HOME">HOME</a>
+					<a class="link" href="<?php echo $url; ?>server/add.php?i=addapplication" alt="Add Application">Add Application</a>
+					<a class="link" href="<?php echo $url; ?>server/add.php?i=addclient" alt="Add client">Add client</a>
+					<a class="link" href="<?php echo $url; ?>server/add.php?i=addquestion" alt="Add question">Add question</a>
+					<a class="link" href="<?php echo $url; ?>server/add.php?i=addcategory" alt="Add category">Add category</a>
+					<a class="link" href="<?php echo $url; ?>server/view.php?i=viewclient" alt="View clients">View clients</a>
+					<a class="link" href="<?php echo $url; ?>server/view.php?i=viewcategory" alt="View categoios">View categoios</a>
+					<a class="link" href="<?php echo $url; ?>server/view.php?i=viewquestion" alt="View all questions">View all questions</a>
+				</div>
+
 		</div>
-		<div class="right">
+		<div class="page_canter">
 	
