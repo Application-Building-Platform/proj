@@ -5,7 +5,6 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 include "connect.php";
 include("../menu.php");
-// include("function.php");
 error_reporting(E_ALL & ~E_NOTICE);
 $clientName         = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
 $clientEmail        = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);

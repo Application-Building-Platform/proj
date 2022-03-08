@@ -102,23 +102,7 @@
 <?php }
 if($_REQUEST['i'] == 'viewquestion'){?>
 
-		<div class="table">
-			<div class="row tblHeader r">Client Name</div>
-			<div class="row tblHeader r">Client Email</div>
-			<div class="row tblHeader">Update</div>
-			<div class="row tblHeader">Delete</div>
-		</div>
-			<?php
-			$TPL['results'] = get_all_data($dbh, 'clients');
-			foreach($TPL['results'] as $t){
-				echo '<div class="table">';
-				echo '<div class="row rows r">' . $t['client_name'] . '</div>';
-				echo '<div class="row rows r">' . $t['client_email'] . '</div>';
-				echo '<div class="row rows">E</div>';
-				echo '<div class="row rows">D</div>';
-				echo '</div>';
-			}
-			?>
+
 <?php } ?>
 
 
