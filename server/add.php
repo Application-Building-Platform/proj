@@ -13,8 +13,8 @@ switch ($_REQUEST['i']) {
     case 'addclient':
         include("client.php");
         break;
-    case 'addquestion':
-        include("question.php");
+    case 'addsurvey':
+        include("survey.php");
         break;
     case 'addcategory':
         include("category.php");
