@@ -23,8 +23,23 @@ function get_all_data($dbh, $table){
 	
 	return $results;
 }
+function readOne($dbh, $rowId, $table, $id){
+	
+	try {
+		$stmt = $dbh->prepare("SELECT * FROM $table WHERE $id = ?");
+		$stmt->execute([$rowId]);
+		return $stmt->fetch();
+	}
+	catch (PDOException $e){
+		echo "Select failed: " . $e->getMessage();
+		exit();
+	}
+	
+}
 
-
-
+$TPL['edit_client'] = readOne($dbh, $_REQUEST['id'], 'clients', 'client_id');
+$TPL['edit_category'] = readOne($dbh, $_REQUEST['id'], 'categories', 'category_id');
+$TPL['clients'] = get_all_data($dbh, 'clients');
+$TPL['categories'] = get_all_data($dbh, 'categories');
 
 

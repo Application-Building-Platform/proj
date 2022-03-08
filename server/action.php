@@ -1,8 +1,11 @@
 <?php
 
-
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 include "connect.php";
 include("../menu.php");
+// include("function.php");
 error_reporting(E_ALL & ~E_NOTICE);
 $clientName         = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
 $clientEmail        = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
@@ -11,7 +14,6 @@ $clientAddress      = filter_input(INPUT_POST, "address", FILTER_SANITIZE_SPECIA
 $clientCategory     = filter_input(INPUT_POST, "category", FILTER_SANITIZE_SPECIAL_CHARS);
 $clientDescription  = filter_input(INPUT_POST, "description", FILTER_SANITIZE_SPECIAL_CHARS);
 $categoryName       = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
-// $message = "";
 switch ($_REQUEST['y']) {
     case 'add_client':
         if(($clientName && 
@@ -26,12 +28,24 @@ switch ($_REQUEST['y']) {
 			$clientAddress &&
 			$clientCategory &&
 			$clientDescription) !== false){
-			$SQL = $dbh->prepare("INSERT INTO clients (client_name,client_email,client_phone,client_address,client_category,client_description) VALUES(?,?,?,?,?,?)");
-			$insert = [$clientName, $clientEmail, $clientPhone, $clientAddress, $clientCategory, $clientDescription];
+			$SQL = $dbh->prepare("INSERT INTO clients (
+					   client_name,
+					   client_email,
+					   client_phone,
+					   client_address,
+					   client_category,
+					   client_description
+					   ) VALUES(?,?,?,?,?,?)");
+			$insert = [$clientName, 
+					   $clientEmail, 
+					   $clientPhone, 
+					   $clientAddress, 
+					   $clientCategory, 
+					   $clientDescription];
 			if ($SQL->execute($insert)) {
 				echo "<div class='controller'>";
 				echo "<div class='form green'>";
-				echo "The client has been added to database";
+				echo "The client $clientName , has been added to database";
 				echo "</div>";
 				echo "</div>";
 			}else{
@@ -69,7 +83,7 @@ switch ($_REQUEST['y']) {
 			if ($SQL->execute([$colum])) {
 				echo "<div class='controller'>";
 				echo "<div class='form green'>";
-				echo "The $table has been deleted";
+				echo "The $table id : " . $_REQUEST['id'] . ", has been deleted";
 				echo "</div>";
 				echo "</div>";
 			}else {
@@ -77,6 +91,63 @@ switch ($_REQUEST['y']) {
 			}
 		}
         break;
+	case 'edit_client':
+		include("client.php");
+        break;
+	case 'edit_category':
+		include("category.php");
+        break;
+	case 'update_client':
+		try {
+		  $stmt = $dbh->prepare("UPDATE clients SET client_name = ?,
+													client_email = ?,
+													client_phone = ?,
+													client_address = ?,
+													client_category = ?,
+													client_description = ? WHERE client_id = ?");
+		  if ($stmt->execute([ $clientName, 
+							   $clientEmail, 
+							   $clientPhone, 
+							   $clientAddress, 
+							   $clientCategory, 
+							   $clientDescription, 
+							   $_REQUEST['id'] ])) {
+				echo "<div class='controller'>";
+				echo "<div class='form green'>";
+				echo "The client id : " . $_REQUEST['id'] . ", has been updated";
+				echo "</div>";
+				echo "</div>";
+			}else {
+				echo"error";
+			}
+		}
+		catch(PDOException $e)
+		{
+		  echo "Update failed: " . $e->getMessage();
+		  exit();
+		}
+
+		break;
+	case 'update_category':
+		try {
+		  $stmt = $dbh->prepare("UPDATE categories SET category_name = ? WHERE category_id = ?");
+		  if ($stmt->execute([ $categoryName, $_REQUEST['id'] ])) {
+				echo "<div class='controller'>";
+				echo "<div class='form green'>";
+				echo "The category id : " . $_REQUEST['id'] . ", has been updated";
+				echo "</div>";
+				echo "</div>";
+			}else {
+				echo"error";
+			}
+		}
+		catch(PDOException $e)
+		{
+		  echo "Update failed: " . $e->getMessage();
+		  exit();
+		}
+
+		break;
 	default:
 		echo "default";
 } 
