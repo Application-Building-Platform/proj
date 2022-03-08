@@ -9,16 +9,16 @@
 			<form action="action.php?y=addsurvey" method="post">`
 				<!-- Start Survey Class -->
 				<div class="questinInfo">
-
+					
+					<!-- Start Survey Title -->
+					<div class="qTitle qst qMargin">
+						<label for="qTitle" class="qst lbl">Survey <span class="qi"></span>&nbsp;Title :</label>
+						<input type="text" id="qTitle" class="inputFlex" name="qTitle">
+					</div>
+					<!-- End Survey Title -->
+						
 					<!-- Start Survey Form -->
 					<div class="question qst">
-
-						<!-- Start Survey Title -->
-						<div class="qTitle qst qMargin">
-							<label for="qTitle" class="qst lbl">Survey <span class="qi"></span>&nbsp;Title :</label>
-							<input type="text" id="qTitle" class="inputFlex" name="qTitle">
-						</div>
-						<!-- End Survey Title -->
 
 						<!-- Start Survey Number -->
 						<div class="qst qMargin">
