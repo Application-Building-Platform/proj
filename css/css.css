@@ -55,11 +55,9 @@ body {
     justify-content: center;
 }
 .menu a:hover{
-	color: #fff;
-}
-
-.link:hover{
-	background-color: red;
+      background-color: #00ff00;
+      color: #4c9ed9;
+      border: 1px solid #111;
 }
 
 .logo {
