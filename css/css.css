@@ -54,8 +54,10 @@ body {
     align-items: center;
     justify-content: center;
 }
-.menu a:hover{
-      background-color: #fff;
+
+.link:hover{
+    color: #4c9ed9;
+    background-color: red;
 }
 
 .logo {
