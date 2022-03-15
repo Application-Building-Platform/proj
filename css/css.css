@@ -55,8 +55,9 @@ body {
     justify-content: center;
 }
 .menu a:hover{
-	color: #fff;
+	color: #ffff00;
 }
+
 .logo {
 	width: 875px;
 	flex: 2.3;
