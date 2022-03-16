@@ -8,8 +8,8 @@ switch ($_REQUEST['i']) {
     case 'viewcategory':
         include("category.php");
         break;			
-    case 'viewsurvey':
-        include("survey.php");
+    case 'viewquestion':
+        include("question.php");
         break;
 	default:
 		echo "default";
