@@ -10,57 +10,57 @@ $reqY = isset($_REQUEST['y']) && $_REQUEST['y'] == 'edit_client';
 ?>
 <div class="controller">
 	<div class="title">
-		<h2><?php echo ( $reqI ? 'Add a new client' : 'View clients' ); ?></h2>
+		<h2><?php echo ($reqI ? 'Add a new client' : 'View clients'); ?></h2>
 	</div>
 	<div class="form">
 
-<?php if( $reqI || $reqY ){?>
+		<?php if ($reqI || $reqY) { ?>
 
-		<form action="action.php?y=<?=($reqY ? 'update_client&id=' .$_REQUEST['id'] : 'add_client')?>" method="post">
-			<label for="name">Client Name :</label>
-			<input type="text" id="name" name="name" class="qMargin" value="<?php echo ( $reqY ? $TPL['edit_client']['client_name'] : "" ); ?>">
+			<form action="action.php?y=<?= ($reqY ? 'update_client&id=' . $_REQUEST['id'] : 'add_client') ?>" method="post">
+				<label for="name">Client Name :</label>
+				<input type="text" id="name" name="name" class="qMargin" value="<?php echo ($reqY ? $TPL['edit_client']['client_name'] : ""); ?>">
 
-			<label for="email">Client Email :</label>
-			<input type="text" id="email" name="email" class="qMargin" value="<?php echo ( $reqY ? $TPL['edit_client']['client_email'] : "" ); ?>">
+				<label for="email">Client Email :</label>
+				<input type="text" id="email" name="email" class="qMargin" value="<?php echo ($reqY ? $TPL['edit_client']['client_email'] : ""); ?>">
 
-			<label for="phone">Client Phone :</label>
-			<input type="text" id="phone" name="phone" class="qMargin" value="<?php echo ( $reqY ? $TPL['edit_client']['client_phone'] : "" ); ?>"> 
-			
-			<label for="address">Client Address :</label>
-			<input type="text" id="address" name="address" class="qMargin" value="<?php echo ( $reqY ? $TPL['edit_client']['client_address'] : "" ); ?>">
+				<label for="phone">Client Phone :</label>
+				<input type="text" id="phone" name="phone" class="qMargin" value="<?php echo ($reqY ? $TPL['edit_client']['client_phone'] : ""); ?>">
 
-			<label for="category">Client Category :</label>
-			<input type="text" id="category" name="category" class="qMargin" value="<?php echo ( $reqY ? $TPL['edit_client']['client_category'] : "" ); ?>"> 	
+				<label for="address">Client Address :</label>
+				<input type="text" id="address" name="address" class="qMargin" value="<?php echo ($reqY ? $TPL['edit_client']['client_address'] : ""); ?>">
 
-			<label for="description">Client Description :</label>
-			<textarea id="description" rows="4" name="description" class="qMargin"><?php echo ( $reqY ? $TPL['edit_client']['client_description'] : "" ); ?></textarea>
+				<label for="category">Client Category :</label>
+				<input type="text" id="category" name="category" class="qMargin" value="<?php echo ($reqY ? $TPL['edit_client']['client_category'] : ""); ?>">
 
-			<div class="qst rightSubmit">
-				<input type="submit" value="<?php echo ( $reqY ? 'Update' : 'Add' ); ?>">
+				<label for="description">Client Description :</label>
+				<textarea id="description" rows="4" name="description" class="qMargin"><?php echo ($reqY ? $TPL['edit_client']['client_description'] : ""); ?></textarea>
+
+				<div class="qst rightSubmit">
+					<input type="submit" value="<?php echo ($reqY ? 'Update' : 'Add'); ?>">
+				</div>
+			</form>
+
+		<?php }
+		if ($reqV) { ?>
+
+			<div class="table">
+				<div class="row tblHeader r">Client Name</div>
+				<div class="row tblHeader r">Client Email</div>
+				<div class="row tblHeader">Update</div>
+				<div class="row tblHeader">Delete</div>
 			</div>
-		</form>
-
-<?php }
-if( $reqV ){?>
-
-		<div class="table">
-			<div class="row tblHeader r">Client Name</div>
-			<div class="row tblHeader r">Client Email</div>
-			<div class="row tblHeader">Update</div>
-			<div class="row tblHeader">Delete</div>
-		</div>
 			<?php
-			
-			foreach($TPL['clients'] as $row){
+
+			foreach ($TPL['clients'] as $row) {
 				echo '<div class="table">';
 				echo '<div class="row rows r">' . $row['client_name'] . '</div>';
 				echo '<div class="row rows r">' . $row['client_email'] . '</div>';
-				echo '<div class="row rows"><a href="action.php?y=edit_client&id=' . $row['client_id'] . '" title="Update ' . $row['client_name'] . '">U</a></div>';
-				echo '<div class="row rows"><a href="action.php?y=del_client&id=' . $row['client_id'] . '" title="Delete ' . $row['client_name'] . '">D</a></div>';
+				echo '<div class="row rows"><a href="action.php?y=edit_client&id=' . $row['client_id'] . '" title="Update ' . $row['client_name'] . '"><img src="../images/edit.png" width="20" height="20"></a></div>';
+				echo '<div class="row rows"><a href="action.php?y=del_client&id=' . $row['client_id'] . '" title="Delete ' . $row['client_name'] . '"><img src="../images/delete.png" width="20" height="20"></a></div>';
 				echo '</div>';
 			}
 			?>
-<?php } ?>
+		<?php } ?>
 
 
 	</div>
