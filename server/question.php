@@ -61,7 +61,7 @@
 								<label for="qText" class="qst lbl">Choice <span class="i">&nbsp;#</span>:</label>
 								<input type="text" id="input" name="qText" class="inputFlex" />
 								<input class="addBranchQuestion qst" type="button" value="Add branch question">
-								<input class="choiceButtonDelete qst" type="button" value="Delete Choice"><i class="fa fa-trash"></i>
+								<input class="choiceButtonDelete qst" type="button" value="Delete Choice">
 							</div>
 							<!-- End Question Choice Buttons -->
 
