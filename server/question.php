@@ -9,14 +9,14 @@
 			<form action="action.php?y=addquestion" method="post">`
 				<!-- Start Question Class -->
 				<div class="questinInfo">
-					
+
 					<!-- Start Question Title -->
 					<div class="qTitle qst qMargin">
 						<label for="qTitle" class="qst lbl">Question <span class="qi"></span>&nbsp;Title :</label>
 						<input type="text" id="qTitle" class="inputFlex" name="qTitle">
 					</div>
 					<!-- End Question Title -->
-						
+
 					<!-- Start Question Form -->
 					<div class="question qst">
 

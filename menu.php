@@ -30,7 +30,7 @@ $url = 'http://' . $_SERVER['SERVER_NAME'] . '/proj/';
 				<a class="link" href="<?php echo $url; ?>server/add.php?i=addquestion" alt="Add a question">Add a Question</a>
 				<a class="link" href="<?php echo $url; ?>server/add.php?i=addcategory" alt="Add category">Add Category</a>
 				<a class="link" href="<?php echo $url; ?>server/view.php?i=viewclient" alt="View clients">View Clients</a>
-				<a class="link" href="<?php echo $url; ?>server/view.php?i=viewcategory" alt="View categoios">View Categoios</a>
+				<a class="link" href="<?php echo $url; ?>server/view.php?i=viewcategory" alt="View categories">View Categories</a>
 				<a class="link" href="<?php echo $url; ?>server/view.php?i=viewquestion" alt="View all questions">View All Questions</a>
 			</div>
 
