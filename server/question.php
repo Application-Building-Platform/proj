@@ -9,14 +9,14 @@
 			<form action="action.php?y=addquestion" method="post">`
 				<!-- Start Question Class -->
 				<div class="questinInfo">
-					
+
 					<!-- Start Question Title -->
 					<div class="qTitle qst qMargin">
 						<label for="qTitle" class="qst lbl">Question <span class="qi"></span>&nbsp;Title :</label>
 						<input type="text" id="qTitle" class="inputFlex" name="qTitle">
 					</div>
 					<!-- End Question Title -->
-						
+
 					<!-- Start Question Form -->
 					<div class="question qst">
 
@@ -61,7 +61,7 @@
 								<label for="qText" class="qst lbl">Choice <span class="i">&nbsp;#</span>:</label>
 								<input type="text" id="input" name="qText" class="inputFlex" />
 								<input class="addBranchQuestion qst" type="button" value="Add branch question">
-								<input class="choiceButtonDelete qst" type="button" value="Delete Choice">
+								<input class="choiceButtonDelete qst" type="button" value="Delete Choice"><i class="fa fa-trash"></i>
 							</div>
 							<!-- End Question Choice Buttons -->
 
