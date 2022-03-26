@@ -4,11 +4,11 @@
 include("../menu.php");
 error_reporting(E_ALL & ~E_NOTICE);
 switch ($_REQUEST['i']) {
-	case 'id':
-        echo $_REQUEST['id'];
-        break;
+	// case 'id':
+        // echo $_REQUEST['id'];
+        // break;
     case 'addapplication':
-        echo "application";
+        include("application.php");
         break;
     case 'addclient':
         include("client.php");

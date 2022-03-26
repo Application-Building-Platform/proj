@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 26, 2022 at 01:27 AM
+-- Generation Time: Mar 26, 2022 at 01:02 AM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -47,18 +47,17 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `category_id` int(11) NOT NULL AUTO_INCREMENT,
   `category_name` varchar(255) NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `categories`
 --
 
 INSERT INTO `categories` (`category_id`, `category_name`) VALUES
-(1, 'ss'),
-(2, 'dd'),
-(3, 'ddd'),
-(4, 'Ù‚Ù‚'),
-(5, 'Ø³Ø³');
+(55, ''),
+(54, ''),
+(52, 'jj'),
+(53, 'Mouaiad Hejazi');
 
 -- --------------------------------------------------------
 
@@ -73,21 +72,16 @@ CREATE TABLE IF NOT EXISTS `clients` (
   `client_email` varchar(255) NOT NULL,
   `client_phone` varchar(255) NOT NULL,
   `client_address` varchar(255) NOT NULL,
-  `client_category` varchar(255) NOT NULL,
   `client_description` varchar(255) NOT NULL,
   PRIMARY KEY (`client_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=40 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `clients`
 --
 
-INSERT INTO `clients` (`client_id`, `client_name`, `client_email`, `client_phone`, `client_address`, `client_category`, `client_description`) VALUES
-(1, 'jj', 'mkjb@mfoe.com', '2592592598', 'dd', 'dd', ' dd'),
-(25, 'Mouaiad Hejazi', 'mkjb@mfoe.com', 'mkjb@mfoe.com', 'dd', 'dd', ' Ø¦Ø¦Ø¦'),
-(24, 'jj', 'mkjb@mfoe.com', 'mkjb@mfoe.com', 'dd', 'dd', ' Ù‚Ù‚Ù‚'),
-(23, 'jj', 'mkjb@mfoe.com', 'mkjb@mfoe.com', 'dd', 'ddfff', ' fff'),
-(22, 'jj', 'mkjb@mfoe.com', '2592592598', 'dd', 'dd', ' ss');
+INSERT INTO `clients` (`client_id`, `client_name`, `client_email`, `client_phone`, `client_address`, `client_description`) VALUES
+(39, 'jjØ³Ø³', 'mkjb@mfoe.com', 'mkjb@mfoe.com', 'dd', 'ÙŠÙŠ');
 
 -- --------------------------------------------------------
 
@@ -113,13 +107,12 @@ CREATE TABLE IF NOT EXISTS `polls` (
 DROP TABLE IF EXISTS `questions`;
 CREATE TABLE IF NOT EXISTS `questions` (
   `question_id` int(11) NOT NULL AUTO_INCREMENT,
-  `poll_id` int(11) NOT NULL,
-  `question_type` enum('TEXT','CHECKBOX','RADIOBOX') NOT NULL,
+  `question_type` enum('SHORTANSWER','CHECKBOX','RADIO') NOT NULL,
   `question_value` json DEFAULT NULL,
   `question_solved` tinyint(1) NOT NULL DEFAULT '0',
   `category_id` int(11) NOT NULL,
   PRIMARY KEY (`question_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

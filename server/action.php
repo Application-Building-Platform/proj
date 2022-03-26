@@ -3,43 +3,40 @@
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
+error_reporting(E_ALL & ~E_NOTICE);
 include "connect.php";
 include("../menu.php");
-error_reporting(E_ALL & ~E_NOTICE);
-$clientName         = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
-$clientEmail        = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
-$clientPhone        = filter_input(INPUT_POST, "phone", FILTER_SANITIZE_SPECIAL_CHARS);
-$clientAddress      = filter_input(INPUT_POST, "address", FILTER_SANITIZE_SPECIAL_CHARS);
-$clientCategory     = filter_input(INPUT_POST, "category", FILTER_SANITIZE_SPECIAL_CHARS);
+
+$clientName         = filter_input(INPUT_POST, "name",        FILTER_SANITIZE_SPECIAL_CHARS);
+$clientEmail        = filter_input(INPUT_POST, "email",       FILTER_VALIDATE_EMAIL);
+$clientPhone        = filter_input(INPUT_POST, "phone",       FILTER_SANITIZE_SPECIAL_CHARS);
+$clientAddress      = filter_input(INPUT_POST, "address",     FILTER_SANITIZE_SPECIAL_CHARS);
+$clientCategory     = filter_input(INPUT_POST, "category",    FILTER_SANITIZE_SPECIAL_CHARS);
 $clientDescription  = filter_input(INPUT_POST, "description", FILTER_SANITIZE_SPECIAL_CHARS);
-$categoryName       = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
+$categoryName       = filter_input(INPUT_POST, "name",        FILTER_SANITIZE_SPECIAL_CHARS);
 switch ($_REQUEST['y']) {
     case 'add_client':
         if(($clientName && 
 			$clientEmail && 
 			$clientPhone && 
 			$clientAddress &&
-			$clientCategory &&
 			$clientDescription) !== null &&
 		   ($clientName && 
 			$clientEmail && 
 			$clientPhone && 
 			$clientAddress &&
-			$clientCategory &&
 			$clientDescription) !== false){
 			$SQL = $dbh->prepare("INSERT INTO clients (
 					   client_name,
 					   client_email,
 					   client_phone,
 					   client_address,
-					   client_category,
 					   client_description
-					   ) VALUES(?,?,?,?,?,?)");
+					   ) VALUES(?,?,?,?,?)");
 			$insert = [$clientName, 
 					   $clientEmail, 
 					   $clientPhone, 
 					   $clientAddress, 
-					   $clientCategory, 
 					   $clientDescription];
 			if ($SQL->execute($insert)) {
 				echo "<div class='controller'>";
@@ -47,6 +44,7 @@ switch ($_REQUEST['y']) {
 				echo "The client $clientName , has been added to database";
 				echo "</div>";
 				echo "</div>";
+				header( "refresh:1;url=add.php?i=addclient" );
 			}else{
 				echo"error";
 			}
@@ -61,9 +59,10 @@ switch ($_REQUEST['y']) {
 			if ($SQL->execute($insert)) {
 				echo "<div class='controller'>";
 				echo "<div class='form green'>";
-				echo "The category has been added to database";
+				echo "The category $categoryName has been added to database";
 				echo "</div>";
 				echo "</div>";
+				header( "refresh:1;url=add.php?i=addcategory" );
 			}else{
 				echo"error";
 			}
@@ -80,11 +79,25 @@ switch ($_REQUEST['y']) {
         if($client_id !== null && $client_id !== false){
 			$SQL = $dbh->prepare("DELETE FROM $table WHERE $row = ?");
 			if ($SQL->execute([$colum])) {
-				echo "<div class='controller'>";
-				echo "<div class='form green'>";
-				echo "The $table id : " . $_REQUEST['id'] . ", has been deleted";
-				echo "</div>";
-				echo "</div>";
+				// echo "<div class='controller'>";
+				// echo "<div class='form green'>";
+				// echo "The $table id : " . $_REQUEST['id'] . ", has been deleted";
+				// echo "</div>";
+				// echo "</div>";
+			}else {
+				echo"error";
+			}
+		}
+        break;
+	case 'del_question':
+        if($_REQUEST['id'] !== null && $_REQUEST['id'] !== false){
+			$SQL = $dbh->prepare("DELETE FROM questions WHERE question_id = ?");
+			if ($SQL->execute([$_REQUEST['id']])) {
+				// echo "<div class='controller'>";
+				// echo "<div class='form green'>";
+				// echo "The question id : " . $_REQUEST['id'] . ", has been deleted";
+				// echo "</div>";
+				// echo "</div>";
 			}else {
 				echo"error";
 			}
@@ -96,19 +109,20 @@ switch ($_REQUEST['y']) {
 	case 'edit_category':
 		include("category.php");
         break;
+	case 'edit_question':
+		include("question.php");
+        break;
 	case 'update_client':
 		try {
 		  $stmt = $dbh->prepare("UPDATE clients SET client_name = ?,
 													client_email = ?,
 													client_phone = ?,
 													client_address = ?,
-													client_category = ?,
 													client_description = ? WHERE client_id = ?");
 		  if ($stmt->execute([ $clientName, 
 							   $clientEmail, 
 							   $clientPhone, 
 							   $clientAddress, 
-							   $clientCategory, 
 							   $clientDescription, 
 							   $_REQUEST['id'] ])) {
 				echo "<div class='controller'>";
@@ -116,6 +130,7 @@ switch ($_REQUEST['y']) {
 				echo "The client id : " . $_REQUEST['id'] . ", has been updated";
 				echo "</div>";
 				echo "</div>";
+				header( "refresh:1;url=view.php?i=viewclient");
 			}else {
 				echo"error";
 			}
@@ -136,6 +151,7 @@ switch ($_REQUEST['y']) {
 				echo "The category id : " . $_REQUEST['id'] . ", has been updated";
 				echo "</div>";
 				echo "</div>";
+				header( "refresh:1;url=view.php?i=viewcategory");
 			}else {
 				echo"error";
 			}
@@ -146,6 +162,26 @@ switch ($_REQUEST['y']) {
 		  exit();
 		}
 
+		break;
+	case 'addquestion':
+		$question_data = array();
+		$question_data['q']          = $_POST['qText'];
+		$question_data['choices']    = $_POST['qCho'];
+		$question_data['q_type']     = $_POST['qType'];
+		$question_data['q_category'] = $_POST['qCategory'];
+		$SQL = $dbh->prepare("INSERT INTO questions (`question_type`, `question_value`, `category_id`) VALUES(?,?,?)");
+		$insert = [$question_data['q_type'], json_encode($question_data), 1];
+		if ($SQL->execute($insert)) {
+			echo "<div class='controller'>";
+			echo "<div class='form green'>";
+			echo "The question has been added to database";
+			echo "</div>";
+			echo "</div>";
+			header( "refresh:1;url=add.php?i=addquestion");
+			
+		}else{
+			echo"error";
+		}
 		break;
 	default:
 		echo "default";

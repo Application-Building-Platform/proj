@@ -56,8 +56,8 @@ body {
 }
 
 .link:hover{
-    color: #4c9ed9;
-    background-color: red;
+    color: white;
+    background-color: #d5c6c6;
 }
 
 .logo {
@@ -87,7 +87,7 @@ body {
 }
 .form input, .form textarea {
 	width: 100%;
-	padding: 1em;
+	padding: 8px;
     /* margin: 0.2em 0 1em 0; */
 	border: 1px solid #bfc1c1;
 }
@@ -99,6 +99,13 @@ body {
 }
 .green {
 	background: #cef1ce;
+}
+.red {
+	background: red;
+	color: white;
+}
+.message {
+	padding: 6px;
 }
 .table {
 	display: flex;
@@ -144,7 +151,7 @@ body {
     font: normal 120% arial, sans-serif;
     color: #A4AA04;
 }
-.questinInfo input {
+.questinInfo input:not([type='submit']) {
     padding: 5px;
 }
 .qMargin  {
@@ -160,7 +167,7 @@ body {
 .lbl {
 	align-items: center;
 }
-.qType {
+.qType, .qCategory, .cName, .qSelect{
 	padding: 5px;
     border: 1px solid #bfc1c1;
 }
@@ -177,18 +184,21 @@ body {
 .rightSubmit input, .newQButton input{
 	width: auto;
 }
-.rightSubmit input[type="button"], .deleteQ{
-	width: auto;
-	background: red;
-	color: white;
-}
 .childChoice {
 	column-gap: 20px;
 }
-.choiceButtonAdd input{
+.addchild input {
 	flex-basis: 95px;
 }
-
+.buttonbg input{
+	background: #404040;
+    color: white;
+	padding: 10px !important;
+}
+.justline{
+	border: 1px dotted #bfc1c1;
+	margin: 5px 0 15px;
+}
 
 
 .footer {
