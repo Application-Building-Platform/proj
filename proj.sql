@@ -40,6 +40,7 @@ CREATE TABLE `answers` (
 -- Table structure for table `categories`
 --
 
+DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `category_id` int(11) NOT NULL,
   `category_name` varchar(255) NOT NULL
@@ -59,6 +60,7 @@ INSERT INTO `categories` (`category_id`, `category_name`) VALUES
 -- Table structure for table `clients`
 --
 
+DROP TABLE IF EXISTS `clients`;
 CREATE TABLE `clients` (
   `client_id` int(11) NOT NULL,
   `client_name` varchar(255) NOT NULL,
@@ -84,6 +86,7 @@ INSERT INTO `clients` (`client_id`, `client_name`, `client_email`, `client_phone
 -- Table structure for table `polls`
 --
 
+DROP TABLE IF EXISTS `polls`;
 CREATE TABLE `polls` (
   `poll_id` int(11) NOT NULL,
   `poll_title` varchar(255) NOT NULL,
@@ -97,6 +100,7 @@ CREATE TABLE `polls` (
 -- Table structure for table `questions`
 --
 
+DROP TABLE IF EXISTS `questions`;
 CREATE TABLE `questions` (
   `question_id` int(11) NOT NULL,
   `poll_id` int(11) NOT NULL,
