@@ -5,7 +5,6 @@ error_reporting(E_ALL);
 error_reporting(E_ALL & ~E_NOTICE);
 
 $reqI = isset($_REQUEST['i']) && $_REQUEST['i'] == 'addquestion';
-$reqV = isset($_REQUEST['i']) && $_REQUEST['i'] == 'viewquestion';
 $reqY = isset($_REQUEST['y']) && $_REQUEST['y'] == 'edit_question';
 $arr = json_decode($TPL['edit_question'][2], true);
 
@@ -14,7 +13,7 @@ $arr = json_decode($TPL['edit_question'][2], true);
 
 <div class="controller">
 	<div class="title">
-		<h2><?php echo ( $reqI ? 'Add a new Question' : 'View Questions'); ?></h2>
+		<h2><?php echo ( $reqI ? 'Add a new Question' : 'Edit Questions : ' .$_REQUEST['id'] ); ?></h2>
 	</div>
 	<div class="form">
 	<div class="message"></div>
@@ -28,9 +27,9 @@ $arr = json_decode($TPL['edit_question'][2], true);
 					<div class="qst qMargin">
 						<label for="qCategory" class="qst lbl">Question Category :</label>
 						<select name="qCategory" id="qCategory" class="qCategory inputFlex">
-						<?php foreach($TPL['categories'] as $row){
-							echo '<option value="' . $row['category_name'] . '">' . $row['category_name'] . '</option>';
-						}?>
+							<?php foreach($TPL['categories'] as $row){
+								echo '<option value="' . $row['category_id'] . '">' . $row['category_name'] . '</option>';
+							}?>
 						</select>
 					</div>
 					<!-- End Question Category -->
@@ -49,7 +48,7 @@ $arr = json_decode($TPL['edit_question'][2], true);
 						<!-- Start Question Text -->
 						<div class="qText qst qMargin">
 							<label for="qText" class="qst lbl">Question Text</label>
-							<input type="text" id="qText" name="qText" class="inputFlex" value="<?php echo ( $reqY ? $arr['q'] : "" ); ?>">
+							<input type="text" id="qText" name="qText" class="inputFlex" value="<?php echo ( $reqY ? $arr['q'] : "" ); ?>" required>
 						</div>
 						<!-- End Question Text -->
 						
@@ -59,7 +58,7 @@ $arr = json_decode($TPL['edit_question'][2], true);
 							<label for="qType" class="qst lbl">Question Type</label>
 							<select name="qType" id="qType" class="qType inputFlex">
 								<option value="checkBox" <?php if ($reqY && $TPL['edit_question']['question_type'] == "CHECKBOX"){ ?> selected="selected" <?php } ?>>CheckBox</option>
-								<option value="shortAnswer" <?php if ($reqY && $TPL['edit_question']['question_type'] == "SHORTANSWER"){ ?> selected="selected" <?php } ?>>Short Answer</option>
+								<option value="TEXT" <?php if ($reqY && $TPL['edit_question']['question_type'] == "TEXT"){ ?> selected="selected" <?php } ?>>Text</option>
 								<option value="radio" <?php if ($reqY && $TPL['edit_question']['question_type'] == "RADIO"){ ?> selected="selected" <?php } ?>>Radio</option>
 							</select>
 						</div>
@@ -68,8 +67,8 @@ $arr = json_decode($TPL['edit_question'][2], true);
 						<!-- Start Question Choice Div -->
 						<div class="choiceSection qst qMargin">
 							<?php 
-							if($reqI || $reqV || $reqY){
-								if($TPL['edit_question']['question_type'] != "SHORTANSWER"){ 
+							if($reqI || $reqY){
+								if($TPL['edit_question']['question_type'] != "TEXT"){ 
 							?>
 							
 							<!-- Start Question Choices Title -->
@@ -83,7 +82,7 @@ $arr = json_decode($TPL['edit_question'][2], true);
 								<?php 
 									$count = 1;
 									if($reqY){
-										if($TPL['edit_question']['question_type'] != "SHORTANSWER"){
+										if($TPL['edit_question']['question_type'] != "TEXT"){
 											for($i = 0; $i < sizeof($arr['choices']); $i++){
 												echo '<div class="childChoice qst qMargin">';
 													echo '<label for="qCho1" class="qst lbl">Choice: ' . $count . '</label>';
@@ -94,17 +93,18 @@ $arr = json_decode($TPL['edit_question'][2], true);
 											}
 										}
 									}else { ?>
+								
 								<div class="childChoice qst qMargin">
 									<label for="qCho1" class="qst lbl">Choice: 1</label>
-									<input type="text" id="input1" name="qCho[]" class="inputFlex" />
+									<input type="text" id="input1" name="qCho[]" class="inputFlex">
 									<input class="choiceButtonDelete qst" type="button" value="Delete Choice">
 								</div>
 									<?php } ?>
 							</div>
 							<!-- End Question Choice Buttons -->
 							<?php 
-							if($reqI || $reqV || $reqY){
-								if($TPL['edit_question']['question_type'] != "SHORTANSWER"){ 
+							if($reqI || $reqY){
+								if($TPL['edit_question']['question_type'] != "TEXT"){ 
 							?>
 							<!-- Start Add Choice Button -->
 							<div class="addchild qst">
@@ -133,29 +133,6 @@ $arr = json_decode($TPL['edit_question'][2], true);
 
 			</form>
 
-		<?php }
-		if ($reqV) { ?>
-			<div class="table">
-				<div class="row tblHeader r">Question</div>
-				<div class="row tblHeader">Category</div>
-				<div class="row tblHeader">Update</div>
-				<div class="row tblHeader">Delete</div>
-				<div class="row tblHeader">View</div>
-			</div>
-				<?php
-				
-				foreach($TPL['questions'] as $key => $row){
-					$arr = json_decode($TPL['questions'][$key]['question_value'], true);
-					echo '<div class="table">';
-					echo '<div class="row rows r">' . $arr['q'] . '</div>';
-					echo '<div class="row rows">' . $arr['q_category'] . '</div>';
-					echo '<div class="row rows"><a href="action.php?y=edit_question&id=' . $row['question_id'] . '" title="Update ' . $arr['q'] . '"><img src="../images/edit.png" width="20" height="20"></a></div>';
-					echo '<div class="row rows"><a class="delete" id="question" data-id="' . $row['question_id'] . '" title="Delete ' . $arr['q'] . '"><img src="../images/delete.png" width="20" height="20"></a></div>';
-					echo '<div class="row rows"><a href="action.php?y=view_question&id=' . $row['question_id'] . '" title="view ' . $arr['q'] . '"><img src="../images/view.png" width="20" height="20"></a></div>';
-					echo '</div>';
-				}
-		} ?>
-
-
+		<?php } ?>
 	</div>
 </div>

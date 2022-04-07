@@ -11,7 +11,7 @@ window.addEventListener("load", function() {
 	
 	$('#qType').on('change', function() {
 		console.log("e.value : " + this.value);
-		if(this.value == 'shortAnswer'){
+		if(this.value == 'TEXT'){
 			$('.choiceSection').hide();
 		}else{
 			$('.choiceSection').show();
@@ -30,7 +30,7 @@ window.addEventListener("load", function() {
 		// console.log($(this).attr("data-id"));
 		
 		// console.log("e.value : " + $("#dd")this.attr("data-id"));
-		// if(this.value == 'shortAnswer'){
+		// if(this.value == 'text'){
 			// $('.choiceSection').hide();
 		// }else{
 			// $('.choiceSection').show();
@@ -58,7 +58,7 @@ window.addEventListener("load", function() {
 			$(this).on("click", function(){
 				let id = $(this).attr('data-id'); 
 				let type = this.id;
-				let url = "../server/action.php?y=del_" + type + "&id=" + id;
+				let url = "server/action.php?y=del_" + type + "&id=" + id;
 				$.get(url, function() {
 					$(".message")
 						.addClass("red")
@@ -113,14 +113,107 @@ window.addEventListener("load", function() {
 	});
 	
 	$('.choiceButtonDelete').bind('click', function(){
-		console.log("Fff")
-
 		$('div.question' + qNum).find('div.childChoice').each(function(i, obj){
 			console.log("obj " + obj + " - " + i);
 			$(obj).slice(i).remove();
 		});
-	
 	});
 	///var textValues = $('.question').map((i, el) => console.log("i : " + i + " el : " + el)).get();
 
+
+	$('.nav-tab').click(function(e) {
+	  //Toggle tab link
+	  $(this).addClass('nav-tab-active').siblings().removeClass('nav-tab-active');
+
+	  //Toggle target tab
+	  $($(this).attr('href')).addClass('active').siblings().removeClass('active');
+	});
+
+
+
+
+	
+	
+	
+	
+	$(".addNewQ").on('click', function(){
+		$("#pick_question_form").show();
+	});
+
+	$('#save_question').on('click', function(){
+		let question_title = $('#qSelect').find(":selected").text();
+		let question_id    = $('#qSelect').val()
+		
+		if(question_id != null){
+			if( !$('div[data-question=' + question_id + ']').length){
+			
+				let question_choices = jQuery.parseJSON($('#qSelect').find(":selected").attr('data-choices')); 
+				let question_type    = $('#qSelect').find(":selected").attr('data-type'); 
+				let conditions       = '<select name="conditions[' + question_id + '][xxx]" data-question="' + question_id + '" class="select_condition qSelect"><option value="0">Go to next</option>';
+				let question_info    =  '';
+				
+
+				$('.added_question').each(function(i){
+					conditions += '<option value="' + $(this).attr('data-question') + '">Go to: ' + $(this).find('h4').text() + '</option>';
+				});
+				
+				conditions += '</select>';
+
+
+				for(let i = 0; i < question_choices.length; i++ ){
+					if(question_type == 'radio'){
+						question_info += '<div class="q_choices qst"><div class="cho_start">'
+										+ '<input disabled type="radio" id="radio" name="' + question_id + '" value="' + question_choices[i] + '" />'
+										+ '<label for="radio" name="' + question_id + '">' + question_choices[i] + '</label></div>'
+										+ '<div class="cho_end">' + conditions.replace('xxx', i) + '</div></div>';
+					}else{
+						question_info += '<div class="q_choices qst"><div class="cho_start">'
+										+ '<input disabled type="' + question_type + '" name="' + question_id + '" value="' + question_choices[i] + '" />'
+										+ '<label for="' + question_type + '" name="' + question_id + '">' + question_choices[i] + '</label></div></div>';
+					}
+				}
+
+				$('#questions').append('<div class="added_question" data-question="'
+										+ question_id + '"><div class="qst"><h4>' + qNum + ' - ' + question_title + '</h4></div><div class="que_cho">' + question_info + '</div>'
+										+ '<input type="hidden" class="added_hidden_question" name="questions[]" value="' 
+										+ question_id + '" /><div class="delete_Button qst"><input type="button" onClick="$(\'div[data-question=\' +  $(this).prev().val() + \' ]\').remove();" value="delete" /></div></div>');	
+
+				$('.select_condition').each(function(i){
+					let q_id = $(this).attr('data-question');
+					if(q_id != question_id){
+						$(this).append('<option value="' + question_id + '">Go to: ' + qNum + ' - ' + question_title + '</option>');
+					}
+				})
+
+			}else {
+				alert("you can't choose the same question twice!");
+				qNum--;
+			}
+		}else {
+			alert("Please select a question");
+			qNum--;
+		}
+		
+		qNum++;
+		
+	});
+	
+	$('#cancel_a').on('click', function(){
+
+		$(location).prop('href', '/');
+		
+	});
+	
+	$('#delete_a').on('click', function(){
+		if(confirm('Are you sure?')){
+		
+			$(location).prop('href', '/');
+		}
+		
+		
+		
+	});
+
+	
+	
 }); 
