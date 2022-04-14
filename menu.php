@@ -1,9 +1,4 @@
-<?php
-
-$url = 'http://' . $_SERVER['SERVER_NAME'] . '/proj/';
-
-?>
-
+<?php include("server/connect.php"); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,10 +6,9 @@ $url = 'http://' . $_SERVER['SERVER_NAME'] . '/proj/';
 	<title>Project (Beta)</title>
 	<meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-	<link href="http://127.0.0.1/proj/css/css.css" rel="stylesheet">
-	<script src="http://127.0.0.1/proj/js/js.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
-	</script>
+	<link href="<?=$url?>css/css.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="<?=$url?>js/js.js"></script>
 </head>
 
 <body>
@@ -33,6 +27,5 @@ $url = 'http://' . $_SERVER['SERVER_NAME'] . '/proj/';
 				<a class="link" href="<?php echo $url; ?>server/view.php?i=viewcategory" alt="View Categories">View Categories</a>
 				<a class="link" href="<?php echo $url; ?>server/view.php?i=viewquestion" alt="View all questions">View All Questions</a>
 			</div>
-
 		</div>
 		<div class="page_canter">

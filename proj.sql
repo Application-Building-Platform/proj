@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 26, 2022 at 07:28 PM
--- Server version: 10.4.14-MariaDB
--- PHP Version: 7.4.9
+-- Host: 127.0.0.1:3306
+-- Generation Time: Apr 11, 2022 at 09:13 PM
+-- Server version: 5.7.36
+-- PHP Version: 7.4.26
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,14 +24,40 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `answers`
+-- Table structure for table `applications`
 --
 
-CREATE TABLE `answers` (
-  `id` int(11) NOT NULL,
-  `question_id` int(11) NOT NULL,
-  `value` varchar(255) NOT NULL,
-  `solved_at` date NOT NULL
+DROP TABLE IF EXISTS `applications`;
+CREATE TABLE IF NOT EXISTS `applications` (
+  `application_id` int(11) NOT NULL AUTO_INCREMENT,
+  `application_slug` varchar(255) DEFAULT NULL,
+  `application_title` varchar(255) DEFAULT NULL,
+  `client_id` int(11) NOT NULL,
+  `created_at` date DEFAULT NULL,
+  `category_id` int(11) NOT NULL,
+  `responded_at` int(11) DEFAULT NULL,
+  PRIMARY KEY (`application_id`),
+  UNIQUE KEY `application_slug` (`application_slug`),
+  KEY `category_id` (`category_id`),
+  KEY `client_id` (`client_id`),
+  KEY `responded_at` (`responded_at`)
+) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `application_questions`
+--
+
+DROP TABLE IF EXISTS `application_questions`;
+CREATE TABLE IF NOT EXISTS `application_questions` (
+  `question_id` int(11) DEFAULT NULL,
+  `application_id` int(11) DEFAULT NULL,
+  `question_order` int(2) UNSIGNED NOT NULL DEFAULT '0',
+  `solved_value` varchar(255) DEFAULT NULL,
+  `solved_at` int(11) UNSIGNED DEFAULT NULL,
+  UNIQUE KEY `question_id` (`question_id`,`application_id`),
+  KEY `application_id` (`application_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -40,18 +66,12 @@ CREATE TABLE `answers` (
 -- Table structure for table `categories`
 --
 
-CREATE TABLE `categories` (
-  `category_id` int(11) NOT NULL,
-  `category_name` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `categories`
---
-
-INSERT INTO `categories` (`category_id`, `category_name`) VALUES
-(7, 'Bars'),
-(6, 'Resturants');
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE IF NOT EXISTS `categories` (
+  `category_id` int(11) NOT NULL AUTO_INCREMENT,
+  `category_name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`category_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -59,38 +79,32 @@ INSERT INTO `categories` (`category_id`, `category_name`) VALUES
 -- Table structure for table `clients`
 --
 
-
-CREATE TABLE `clients` (
-  `client_id` int(11) NOT NULL,
-  `client_name` varchar(255) NOT NULL,
-  `client_email` varchar(255) NOT NULL,
-  `client_phone` varchar(255) NOT NULL,
-  `client_address` varchar(255) NOT NULL,
-  `client_category` varchar(255) NOT NULL,
-  `client_description` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `clients`
---
-
-INSERT INTO `clients` (`client_id`, `client_name`, `client_email`, `client_phone`, `client_address`, `client_category`, `client_description`) VALUES
-(28, 'Jane Doe', 'JaneDoe@example.com', '0123456789', 'Hamilton, ON', '', 'In her early thirties. She has a full-bodied, feminine figure, is quite muscular and grounded in her body'),
-(25, 'Mouaiad Hejazi', 'mkjb@mfoe.com', 'mkjb@mfoe.com', 'dd', 'dd', ' Ø¦Ø¦Ø¦'),
-(26, 'Salih Salih', 'salih.salih@mohawkcollege.ca', '4372199433', '40 OXford St.', 'Cafe', ' 123');
+DROP TABLE IF EXISTS `clients`;
+CREATE TABLE IF NOT EXISTS `clients` (
+  `client_id` int(11) NOT NULL AUTO_INCREMENT,
+  `client_name` varchar(255) DEFAULT NULL,
+  `client_email` varchar(255) DEFAULT NULL,
+  `client_phone` varchar(255) DEFAULT NULL,
+  `client_address` varchar(255) DEFAULT NULL,
+  `client_description` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`client_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `polls`
+-- Table structure for table `conditions`
 --
 
-
-CREATE TABLE `polls` (
-  `poll_id` int(11) NOT NULL,
-  `poll_title` varchar(255) NOT NULL,
-  `client_id` int(11) NOT NULL,
-  `created_at` date NOT NULL
+DROP TABLE IF EXISTS `conditions`;
+CREATE TABLE IF NOT EXISTS `conditions` (
+  `application_id` int(11) NOT NULL,
+  `question_id` int(11) NOT NULL,
+  `condition_value` varchar(255) DEFAULT NULL,
+  `condition_question_id` int(11) DEFAULT NULL,
+  UNIQUE KEY `application_id` (`application_id`,`question_id`,`condition_value`),
+  KEY `question_id` (`question_id`),
+  KEY `condition_question_id` (`condition_question_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -99,100 +113,15 @@ CREATE TABLE `polls` (
 -- Table structure for table `questions`
 --
 
-
-CREATE TABLE `questions` (
-  `question_id` int(11) NOT NULL,
-  `poll_id` int(11) NOT NULL,
-  `question_type` enum('TEXT','CHECKBOX','RADIOBOX') NOT NULL,
-  `question_value` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL CHECK (json_valid(`question_value`)),
-  `question_solved` tinyint(1) NOT NULL DEFAULT 0,
-  `category_id` int(11) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `questions`
---
-
-INSERT INTO `questions` (`question_id`, `poll_id`, `question_type`, `question_value`, `question_solved`, `category_id`) VALUES
-(1, 0, '', '{\"q\":\"What is the name of your restaurant?\",\"choices\":[\"\"],\"q_type\":\"shortAnswer\",\"q_category\":\"Resturants\"}', 0, 1),
-(2, 0, '', '{\"q\":\"What is the name of the owner?\",\"choices\":[\"\"],\"q_type\":\"shortAnswer\",\"q_category\":\"Resturants\"}', 0, 1),
-(3, 0, '', '{\"q\":\"What is the name of your bar?\",\"choices\":[\"\",\"\"],\"q_type\":\"shortAnswer\",\"q_category\":\"Bars\"}', 0, 1),
-(4, 0, '', '{\"q\":\"Where is the bar located?\",\"choices\":[\"\"],\"q_type\":\"shortAnswer\",\"q_category\":\"Bars\"}', 0, 1),
-(5, 0, '', '{\"q\":\"How long have you been in business?\",\"choices\":[\"\"],\"q_type\":\"shortAnswer\",\"q_category\":\"Bars\"}', 0, 1),
-(6, 0, '', '{\"q\":\"How long at this location?\",\"choices\":[\"\"],\"q_type\":\"shortAnswer\",\"q_category\":\"Bars\"}', 0, 1),
-(7, 0, 'CHECKBOX', '{\"q\":\"Is this location owner operated?\",\"choices\":[\"Yes\",\"No\"],\"q_type\":\"checkBox\",\"q_category\":\"Bars\"}', 0, 1),
-(18, 0, 'CHECKBOX', '{\"q\":\"Does your restaurant make deliveries?\",\"choices\":[\"Yes\",\"No\"],\"q_type\":\"checkBox\",\"q_category\":\"Resturants\"}', 0, 1),
-(16, 0, 'CHECKBOX', '{\"q\":\"Does your restaurant serve alcohol?\",\"choices\":[\"Yes\",\"No\"],\"q_type\":\"checkBox\",\"q_category\":\"Resturants\"}', 0, 1),
-(15, 0, 'CHECKBOX', '{\"q\":\"In the past 5 years, have you ever been cited for violations of any health or safety codes?\",\"choices\":[\"Yes\",\"No\"],\"q_type\":\"checkBox\",\"q_category\":\"Resturants\"}', 0, 1),
-(19, 0, '', '{\"q\":\"Please provide details:\",\"choices\":[\"\"],\"q_type\":\"shortAnswer\",\"q_category\":\"Resturants\"}', 0, 1);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `answers`
---
-ALTER TABLE `answers`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`category_id`);
-
---
--- Indexes for table `clients`
---
-ALTER TABLE `clients`
-  ADD PRIMARY KEY (`client_id`);
-
---
--- Indexes for table `polls`
---
-ALTER TABLE `polls`
-  ADD PRIMARY KEY (`poll_id`);
-
---
--- Indexes for table `questions`
---
-ALTER TABLE `questions`
-  ADD PRIMARY KEY (`question_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `answers`
---
-ALTER TABLE `answers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `categories`
---
-ALTER TABLE `categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `clients`
---
-ALTER TABLE `clients`
-  MODIFY `client_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-
---
--- AUTO_INCREMENT for table `polls`
---
-ALTER TABLE `polls`
-  MODIFY `poll_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `questions`
---
-ALTER TABLE `questions`
-  MODIFY `question_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+DROP TABLE IF EXISTS `questions`;
+CREATE TABLE IF NOT EXISTS `questions` (
+  `question_id` int(11) NOT NULL AUTO_INCREMENT,
+  `question_type` enum('CHECKBOX','TEXT','RADIO') NOT NULL,
+  `question_value` json DEFAULT NULL,
+  `category_id` int(11) NOT NULL,
+  PRIMARY KEY (`question_id`),
+  KEY `category_id` (`category_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

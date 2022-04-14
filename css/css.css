@@ -20,6 +20,9 @@ body {
 	justify-content: center;
 	flex-direction: column;
 }
+.survey {
+	height: 135px;
+}
 .page_canter {
 	width: 873px;
     overflow: hidden;
@@ -88,7 +91,6 @@ body {
 .form input, .form textarea {
 	width: 100%;
 	padding: 8px;
-    /* margin: 0.2em 0 1em 0; */
 	border: 1px solid #bfc1c1;
 }
 .form input[type="submit"]{
@@ -100,12 +102,34 @@ body {
 .green {
 	background: #cef1ce;
 }
+.msg {
+	padding: 10px;
+	margin-bottom: 10px;
+}
 .red {
 	background: red;
 	color: white;
 }
 .message {
 	padding: 6px;
+}
+.showQuestion {
+    background: white;
+    padding: 15px;
+    margin: 0px 15px 5px;
+    border-bottom: 1px solid #f0efef;
+    border-right: 1px solid #f0efef;
+    border-left: 1px solid #f0efef;
+    border-radius: 0 0 4px 4px;
+	display: flex;
+    flex-direction: column;
+}
+.showQuestion h4 {
+    font: normal 100% arial, sans-serif;
+    color: #A4AA04;
+}
+.showQuestion input {
+	border: 1px solid #bfc1c1;
 }
 .table {
 	display: flex;
@@ -116,7 +140,9 @@ body {
     padding: 10px;
     margin: 1px;
 	flex: 1;
-	word-break:break-all;
+	display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .table .r{
 	flex:5;
@@ -127,14 +153,21 @@ body {
 }
 .table .rows {
 	background: white;
+	word-break: break-word;
 }
 .questinInfo {
 	display: flex;
 	flex-direction: column;
 }
 .qst {
-	flex: 1;
+	flex: 1.1;
 	display: flex;
+}
+.qst_order {
+	display:flex;
+}
+.qst_order img {
+	cursor: pointer;
 }
 .question {
 	flex-direction: column;
@@ -199,8 +232,6 @@ body {
 	border: 1px dotted #bfc1c1;
 	margin: 5px 0 15px;
 }
-
-
 .footer {
 	display: flex;
     margin: auto;
@@ -216,3 +247,139 @@ body {
     justify-content: center;
 }
 
+<<<<<<< Updated upstream
+=======
+.added_question {
+	margin: 10px 0;
+	background: white;
+	padding: 15px;
+	font-size: 18px;
+	border: 1px solid #bfc1c1;
+	display: flex;
+	flex-direction: column;
+}
+.q_choices {
+	margin: 8px 0;
+}
+
+.delete_Button input{
+	flex-basis: 95px;
+}
+.cho_start, .cho_end, .a_q_title {
+	flex: 1;
+}
+.cho_start {
+	display: flex;
+    align-items: center;
+    column-gap: 10px;
+}
+.cho_start input {
+	width: auto;
+}
+.cho_start input[type='TEXT']{
+	width: 100%;
+}
+.cho_end, .b_end {
+    display: flex;
+    justify-content: flex-end;
+}
+.select_condition {
+	width : 100%;
+}
+#questions{
+	
+	margin: 20px 0;
+}
+#questions h3{
+	font: normal 175% 'century gothic', arial, sans-serif;
+    color: #1181e1;
+}
+
+.nav-tab-active {
+	color: black  !important;
+	background: #ededed !important;
+}
+.nav-tab-wrapper {
+	height: 21px;
+	
+}
+.tab-content.active {
+	display: block !important;
+}
+.tab-content {
+	display: none;
+	border: 1px solid #bfc1c1;
+	padding: 20px;
+	background: #ededed;
+	
+}
+.nav-tab {
+    background: #6A6A6A;
+	border: 1px solid #bfc1c1;
+	border-bottom: 0;
+    padding: 7px 15px;
+    border-radius: 3px 3px 0 0;
+	color: #CDC090;
+}
+@media screen and (max-width:390px) {
+	.header {
+		height: 185px;
+	}
+	.logo {
+		width: auto;
+		justify-content: center;
+	}
+	.menu {
+		height: auto;
+		width: auto;
+	}
+	.menu a {
+		font-size: 88%;
+	}
+	.page_canter {
+		width: auto;
+	}
+	.qst {
+		flex: 1;
+	}
+	.inputFlex {
+		flex: 3;
+	}
+	.choiceSection {
+		margin-left: 0;
+	}
+	.footer {
+		width: auto;
+	}
+	.nav-tab {
+		padding: 7px 10px;
+	}
+	.table .r {
+		flex: 1;
+	}
+	.tab-content {
+		padding: 5px;
+	}
+	.table .tblHeader {
+		font-size: 10px;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> Stashed changes

@@ -8,9 +8,9 @@ $reqI = isset($_REQUEST['i']) && $_REQUEST['i'] == 'addquestion';
 $reqV = isset($_REQUEST['i']) && $_REQUEST['i'] == 'viewquestion';
 $reqY = isset($_REQUEST['y']) && $_REQUEST['y'] == 'edit_question';
 $arr = json_decode($TPL['edit_question'][2], true);
+$get_category  = readOne($dbh, $TPL['edit_question']['category_id'], 'categories', 'category_id');
 
 ?>
-
 
 <div class="controller">
 	<div class="title">
@@ -27,10 +27,24 @@ $arr = json_decode($TPL['edit_question'][2], true);
 					<!-- Start Question Category -->
 					<div class="qst qMargin">
 						<label for="qCategory" class="qst lbl">Question Category :</label>
+<<<<<<< Updated upstream
 						<select name="qCategory" id="qCategory" class="qCategory inputFlex">
 						<?php foreach($TPL['categories'] as $row){
 							echo '<option value="' . $row['category_name'] . '">' . $row['category_name'] . '</option>';
 						}?>
+=======
+						<select name="qCategory" id="qCategory" class="qCategory inputFlex" required>
+							<option disabled selected value> -- select a category -- </option>
+							<?php 
+							if($reqY){
+								echo '<option value="' . $get_category['category_id'] . '" selected="selected">' . $get_category['category_name'] . '</option>';
+							}
+							foreach($TPL['categories'] as $row){
+								if($row['category_id'] != $get_category['category_id']){
+									echo '<option value="' . $row['category_id'] . '">' . $row['category_name'] . '</option>';
+								}
+							}?>	
+>>>>>>> Stashed changes
 						</select>
 					</div>
 					<!-- End Question Category -->
@@ -85,7 +99,7 @@ $arr = json_decode($TPL['edit_question'][2], true);
 									if($reqY){
 										if($TPL['edit_question']['question_type'] != "SHORTANSWER"){
 											for($i = 0; $i < sizeof($arr['choices']); $i++){
-												echo '<div class="childChoice qst qMargin">';
+												echo '<div class="childChoice qst qMargin" data-branch="' . $count . '".>';
 													echo '<label for="qCho1" class="qst lbl">Choice: ' . $count . '</label>';
 													echo '<input type="text" id="input1" name="qCho[]" class="inputFlex" value="' . $arr['choices'][$i] . '" />';
 													echo '<input class="choiceButtonDelete qst" type="button" value="Delete Choice">';
@@ -94,7 +108,12 @@ $arr = json_decode($TPL['edit_question'][2], true);
 											}
 										}
 									}else { ?>
+<<<<<<< Updated upstream
 								<div class="childChoice qst qMargin">
+=======
+								
+								<div class="childChoice qst qMargin" data-branch="1">
+>>>>>>> Stashed changes
 									<label for="qCho1" class="qst lbl">Choice: 1</label>
 									<input type="text" id="input1" name="qCho[]" class="inputFlex" />
 									<input class="choiceButtonDelete qst" type="button" value="Delete Choice">

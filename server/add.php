@@ -1,12 +1,10 @@
 <?php
 	
-
 include("../menu.php");
+
 error_reporting(E_ALL & ~E_NOTICE);
+
 switch ($_REQUEST['i']) {
-	// case 'id':
-        // echo $_REQUEST['id'];
-        // break;
     case 'addapplication':
         include("application.php");
         break;
@@ -20,7 +18,8 @@ switch ($_REQUEST['i']) {
         include("category.php");
         break;	
 	default:
-		echo "default";
+		echo "I don't think you should be here .. ";
+		header( "refresh:2;url=" . $url);
 } 
 
 include("../footer.php"); 

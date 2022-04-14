@@ -8,9 +8,6 @@ $reqI = isset($_REQUEST['i']) && $_REQUEST['i'] == 'addcategory';
 $reqV = isset($_REQUEST['i']) && $_REQUEST['i'] == 'viewcategory';
 $reqY = isset($_REQUEST['y']) && $_REQUEST['y'] == 'edit_category';
 ?>
-
-
-
 <div class="controller">
 	<div class="title">
 		<h2><?php echo ( $reqI ? 'Add a new category' : 'View categories'); ?></h2>
@@ -47,7 +44,6 @@ if( $reqV ){?>
 			}
 			?>
 <?php } ?>
-
 
 	</div>
 </div>
